@@ -1,0 +1,158 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rssify/core/services/refresh_service.dart';
+import 'package:rssify/core/sizes.dart';
+import 'package:rssify/features/feed/presentation/feed_add_widget.dart';
+import 'package:rssify/features/feed/presentation/feed_list_widget.dart';
+import 'package:rssify/features/feed_item_list/presentation/controller/feed_item_list_notifier.dart';
+import 'package:rssify/features/sidebar/presentation/controller/sidebar_notifier.dart';
+import 'package:rssify/features/sidebar/presentation/widget/sidebar_list_tile_text_widget.dart';
+import 'package:stockholm/stockholm.dart';
+
+class SidebarWidget extends ConsumerStatefulWidget {
+  const SidebarWidget({super.key});
+
+  @override
+  ConsumerState<ConsumerStatefulWidget> createState() => _SidebarWidgetState();
+}
+
+class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
+  int? _selectedIndex;
+  int? _selectedFeed;
+
+  @override
+  Widget build(BuildContext context) {
+    return Builder(
+      builder: (context) {
+        final state = ref.watch(sideBarNotifierProvider);
+
+        return StockholmSideBar(
+          padding: const .only(top: Sizes.p32),
+          footer: Padding(
+            padding: const EdgeInsets.all(Sizes.p4),
+            child: Row(
+              mainAxisAlignment: .end,
+              spacing: Sizes.p4,
+              children: [
+                Tooltip(
+                  message: 'Refresh feed',
+                  child: StockholmToolbarButton(
+                    icon: CupertinoIcons.refresh,
+                    onPressed: () => _refresh(ref),
+                  ),
+                ),
+                Tooltip(
+                  message: 'Add new feed',
+                  child: StockholmToolbarButton(
+                    icon: CupertinoIcons.add,
+                    onPressed: () => _showAddFeedDialog(context),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          children: [
+            StockholmListTile(
+              leading: const Icon(CupertinoIcons.today),
+              selected: _selectedIndex == 0,
+              child: SidebarListTileTextWidget(
+                text: 'Unread',
+                count: state.feedItemUnreadCount,
+              ),
+              onPressed: () {
+                _getAllFeedsUnread(ref);
+                _setSelectedIndex(0);
+              },
+            ),
+            StockholmListTile(
+              leading: const Icon(CupertinoIcons.star),
+              selected: _selectedIndex == 1,
+              onPressed: () {
+                _getAllFeedsStarred(ref);
+                _setSelectedIndex(1);
+              },
+              child: SidebarListTileTextWidget(
+                text: 'Starred',
+                count: state.feedItemStarredCount,
+              ),
+            ),
+            StockholmListTile(
+              leading: const Icon(CupertinoIcons.list_bullet),
+              selected: _selectedIndex == 2,
+              onPressed: () {
+                _getAllFeedItems(ref);
+                _setSelectedIndex(2);
+              },
+              child: SidebarListTileTextWidget(
+                text: 'All',
+                count: state.feedItemCount,
+              ),
+            ),
+            const Divider(),
+            FeedListWidget(
+              selectedFeed: _selectedFeed,
+              onPressed: (feedId) => _filterByFeedID(feedId, ref),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<void> _getAllFeedItems(WidgetRef ref) async {
+    await ref.read(feedItemListNotifierProvider.notifier).getAllFeedItems();
+  }
+
+  Future<void> _refresh(WidgetRef ref) async {
+    await ref.read(refreshServiceProvider).refresh();
+    await ref
+        .read(feedItemListNotifierProvider.notifier)
+        .getAllUnreadFeedItems();
+    setState(() {
+      _selectedIndex = 0;
+    });
+  }
+
+  Future<void> _showAddFeedDialog(BuildContext context) async {
+    final feedAdded = await showAdaptiveDialog<bool?>(
+      context: context,
+      barrierDismissible: true,
+      builder: (context) {
+        return const FeedAddWidget();
+      },
+    );
+    if (feedAdded ?? false) {
+      await _refresh(ref);
+    }
+  }
+
+  Future<void> _getAllFeedsStarred(WidgetRef ref) async {
+    await ref
+        .read(feedItemListNotifierProvider.notifier)
+        .getAllFeedItemsStarred();
+  }
+
+  Future<void> _getAllFeedsUnread(WidgetRef ref) async {
+    await ref
+        .read(feedItemListNotifierProvider.notifier)
+        .getAllUnreadFeedItems();
+  }
+
+  void _setSelectedIndex(int? index) {
+    setState(() {
+      _selectedIndex = index;
+      _selectedFeed = null;
+    });
+  }
+
+  void _filterByFeedID(int id, WidgetRef ref) {
+    ref
+        .read(feedItemListNotifierProvider.notifier)
+        .getAllFeedItemsFilteredById(id);
+    setState(() {
+      _selectedFeed = id;
+      _selectedIndex = null;
+    });
+  }
+}
