@@ -23,6 +23,10 @@ class AppDatabase extends _$AppDatabase {
   int get schemaVersion => 1;
 
   static QueryExecutor _openConnection() {
+    /*if (kDebugMode) {
+      return NativeDatabase.memory();
+    }*/
+
     return driftDatabase(
       name: Constants.databaseName,
       native: const DriftNativeOptions(
