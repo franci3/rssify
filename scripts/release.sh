@@ -33,13 +33,15 @@ fi
 APPLE_ID="${APPLE_ID:-}"
 TEAM_ID="${TEAM_ID:-}"
 APPLE_PASSWORD="${APPLE_PASSWORD:-}"
+SIGNING_IDENTITY="${SIGNING_IDENTITY:-}"
 
 while [[ "$#" -gt 0 ]]; do
   case $1 in
     --apple-id) APPLE_ID="$2"; shift ;;
     --team-id) TEAM_ID="$2"; shift ;;
     --password) APPLE_PASSWORD="$2"; shift ;;
-    *) error "Unknown parameter passed: $1\nUsage: $0 [--apple-id <apple-id>] [--team-id <team-id>] [--password <app-specific-password>]" ;;
+    --signing-identity) SIGNING_IDENTITY="$2"; shift ;;
+    *) error "Unknown parameter passed: $1\nUsage: $0 [--apple-id <apple-id>] [--team-id <team-id>] [--password <app-specific-password>] [--signing-identity <identity>]" ;;
   esac
   shift
 done
@@ -59,7 +61,35 @@ flutter pub get
 info "Building macOS application..."
 flutter build macos --release
 
-# 2b. Notarize app if credentials are provided
+# 2b. Codesign app and frameworks if signing identity is provided
+if [ -n "$SIGNING_IDENTITY" ]; then
+  info "Codesigning application and nested frameworks..."
+  cd build/macos/Build/Products/Release
+  
+  # 1. Find and sign all flat Mach-O binaries (executables, dylibs, etc.)
+  find rssify.app -depth -type f | while read -r file; do
+    if file "$file" | grep -q "Mach-O"; then
+      info "Signing binary: $file"
+      codesign --force --options runtime --timestamp --sign "$SIGNING_IDENTITY" "$file"
+    fi
+  done
+  
+  # 2. Sign nested bundle directories (frameworks, helper apps, XPC services)
+  find rssify.app -depth -type d \( -name "*.framework" -o -name "*.app" -o -name "*.xpc" \) | while read -r dir; do
+    info "Signing bundle directory: $dir"
+    codesign --force --options runtime --timestamp --sign "$SIGNING_IDENTITY" "$dir"
+  done
+  
+  # 3. Sign the main application bundle
+  info "Signing main application bundle..."
+  codesign --force --options runtime --timestamp --sign "$SIGNING_IDENTITY" rssify.app
+  
+  cd - > /dev/null
+else
+  info "Signing identity not provided. Skipping manual codesigning."
+fi
+
+# 2c. Notarize app if credentials are provided
 if [ -n "$APPLE_ID" ] && [ -n "$TEAM_ID" ] && [ -n "$APPLE_PASSWORD" ]; then
   info "Notarizing application..."
   cd build/macos/Build/Products/Release
