@@ -1,4 +1,6 @@
 class Constants {
-  static String appName = 'Rssify';
-  static String databaseName = 'rssify_database';
+  static const String appName = 'Rssify';
+  static const String databaseName = 'rssify_database';
+  static const String updaterMethodChannel = 'com.francovela.rssify/updater';
+  static const String updaterMethodChannelMethod = 'checkForUpdates';
 }

@@ -28,5 +28,9 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>NSApplication</string>
+	<key>SUFeedURL</key>
+    <string>https://raw.githubusercontent.com/franci3/rssify/main/updates/appcast.xml</string>
+    <key>SUPublicEDKey</key>
+    <string>oJRx8cQrHP0EHNAcNuswacFMzelMxPFqVvsN47bcIuw=</string>
 </dict>
 </plist>
