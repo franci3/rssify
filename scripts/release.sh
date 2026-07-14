@@ -131,17 +131,13 @@ mkdir -p updates
 cp "./$ZIP_NAME" "updates/$ZIP_NAME"
 
 # Generate/Update the appcast
-./sparkle/Sparkle-2.9.4/bin/generate_appcast updates/
-
-# Replace the relative ZIP url with the absolute GitHub Releases download URL
-# macOS sed requires -i '' for in-place edits
-RELEASE_URL="https://github.com/franci3/rssify/releases/download/${TAG}/${ZIP_NAME}"
-sed -i '' "s|url=\"$ZIP_NAME\"|url=\"$RELEASE_URL\"|g" updates/appcast.xml
+RELEASE_URL_PREFIX="https://github.com/franci3/rssify/releases/download/${TAG}/"
+./sparkle/Sparkle-2.9.4/bin/generate_appcast --download-url-prefix "$RELEASE_URL_PREFIX" updates/
 
 # Clean up the temporary zip file inside the updates directory
 rm "updates/$ZIP_NAME"
 
-info "Updated updates/appcast.xml to point to: $RELEASE_URL"
+info "Updated updates/appcast.xml to point to prefix: $RELEASE_URL_PREFIX"
 
 # 4. Create GitHub Release
 info "Creating GitHub release and uploading asset..."
@@ -152,8 +148,13 @@ gh release create "$TAG" "./$ZIP_NAME" \
 # 5. Commit and push the updated appcast.xml to the remote repository
 info "Committing and pushing updated updates/appcast.xml..."
 CURRENT_BRANCH=$(git branch --show-current)
-git add updates/appcast.xml
-git commit -m "chore: update appcast.xml for release $TAG"
-git push origin "$CURRENT_BRANCH"
+if ! git diff --quiet updates/appcast.xml; then
+  git add updates/appcast.xml
+  git commit -m "chore: update appcast.xml for release $TAG"
+  git push origin "$CURRENT_BRANCH"
+else
+  info "No changes to appcast.xml. Skipping commit."
+fi
 
 info "Release $TAG successfully created and appcast pushed to $CURRENT_BRANCH!"
+
