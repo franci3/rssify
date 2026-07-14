@@ -4,6 +4,14 @@
         <title>rssify</title>
         <item>
             <title>1.0.1</title>
+            <pubDate>Wed, 15 Jul 2026 00:50:14 +0200</pubDate>
+            <sparkle:version>7</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://raw.githubusercontent.com/franci3/rssify/main/updates/rssify-macOS.zip" length="23709592" type="application/octet-stream" sparkle:edSignature="2NECYHTt+QNn6C+OBmPQTAiNdTsOCs0iNuSnxt+8dsKKRfk830sHG7RI33jViBRTY/P7nCz4OCmbeHV87vCrAw=="/>
+        </item>
+        <item>
+            <title>1.0.1</title>
             <pubDate>Tue, 14 Jul 2026 23:53:59 +0200</pubDate>
             <sparkle:version>6</sparkle:version>
             <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
@@ -17,14 +25,6 @@
             <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
             <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
             <enclosure url="https://raw.githubusercontent.com/franci3/rssify/main/updates/rssify-macOS.zip" length="23202639" type="application/octet-stream" sparkle:edSignature="QeKxHFP6rmhQeY0j25KQYkqKrAqluWvWs92EpLsbHhk8cRmYbn79ZvKHEw/qbWOmlD3aeS7vvUF5e5un5BjhBg=="/>
-        </item>
-        <item>
-            <title>1.0.1</title>
-            <pubDate>Tue, 14 Jul 2026 23:07:04 +0200</pubDate>
-            <sparkle:version>4</sparkle:version>
-            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
-            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
-            <enclosure url="https://raw.githubusercontent.com/franci3/rssify/main/updates/rssify-macOS.zip" length="23202641" type="application/octet-stream" sparkle:edSignature="MH//b3qop7s9Jw15NuQji2dae6ljes8uvcQXkFI1EC4UG2sy7WKMoNZlC8UIuOUsTTkCrdz8RSAGdKVAJYgIAw=="/>
         </item>
     </channel>
 </rss>
