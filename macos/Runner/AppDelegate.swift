@@ -1,40 +1,37 @@
 import Cocoa
 import FlutterMacOS
-import Sparkle // Import the native Sparkle module
+import Sparkle
 
 @main
 class AppDelegate: FlutterAppDelegate {
-  // Keep a reference to the Sparkle updater controller
   var updaterController: SPUStandardUpdaterController?
 
   override func applicationDidFinishLaunching(_ aNotification: Notification) {
-    super.applicationDidFinishLaunching(aNotification)
-
-    // 1. Initialize the default Sparkle updater (starts automatically)
+    // 1. Initialize Sparkle
     updaterController = SPUStandardUpdaterController(startingUpdater: true, updaterDelegate: nil, userDriverDelegate: nil)
-
-    // 2. Set up a Flutter Method Channel to let Dart trigger a manual check
-    if let controller = mainFlutterWindow?.contentViewController as? FlutterViewController {
-      let channel = FlutterMethodChannel(name: "com.francovela.rssify/updater",
-                                        binaryMessenger: controller.engine.binaryMessenger)
-
-      channel.setMethodCallHandler({
-        [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
-        if call.method == "checkForUpdates" {
-          self?.updaterController?.updater.checkForUpdates()
-          result(nil)
-        } else {
-          result(FlutterMethodNotImplemented)
-        }
-      })
-    }
+    
+    // 2. Set up the Flutter Method Channel
+    let controller : FlutterViewController = mainFlutterWindow?.contentViewController as! FlutterViewController
+    let channel = FlutterMethodChannel(name: "com.francovela.rssify/updater",
+                                      binaryMessenger: controller.engine.binaryMessenger)
+    
+    channel.setMethodCallHandler({
+      [weak self] (call: FlutterMethodCall, result: @escaping FlutterResult) -> Void in
+      if call.method == "checkForUpdates" {
+        self?.updaterController?.updater.checkForUpdates()
+        result(nil)
+      } else {
+        result(FlutterMethodNotImplemented)
+      }
+    })
   }
 
-  override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
+  // Add the recommended security override here to silence the migration warning:
+  override func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
     return true
   }
 
-  override func applicationSupportsSecureRestorableState(_ app: NSApplication) -> Bool {
+  override func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
     return true
   }
 }

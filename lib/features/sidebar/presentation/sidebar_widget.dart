@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rssify/core/services/refresh_service.dart';
+import 'package:rssify/core/services/updater_service.dart';
 import 'package:rssify/core/sizes.dart';
 import 'package:rssify/features/feed/presentation/feed_add_widget.dart';
 import 'package:rssify/features/feed/presentation/feed_list_widget.dart';
@@ -32,9 +33,16 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
           footer: Padding(
             padding: const EdgeInsets.all(Sizes.p4),
             child: Row(
-              mainAxisAlignment: .end,
               spacing: Sizes.p4,
               children: [
+                Tooltip(
+                  message: 'Check for updates',
+                  child: StockholmToolbarButton(
+                    icon: CupertinoIcons.cloud_download,
+                    onPressed: _checkForUpdates,
+                  ),
+                ),
+                const Spacer(),
                 Tooltip(
                   message: 'Refresh feed',
                   child: StockholmToolbarButton(
@@ -144,6 +152,10 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
       _selectedIndex = index;
       _selectedFeed = null;
     });
+  }
+
+  Future<void> _checkForUpdates() async {
+    await ref.read(updaterServiceProvider).triggerUpdateCheck();
   }
 
   void _filterByFeedID(int id, WidgetRef ref) {
