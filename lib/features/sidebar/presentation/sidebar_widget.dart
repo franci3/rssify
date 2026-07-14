@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/services/refresh_service.dart';
 import 'package:rssify/core/services/updater_service.dart';
 import 'package:rssify/core/sizes.dart';
@@ -36,7 +37,7 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
               spacing: Sizes.p4,
               children: [
                 Tooltip(
-                  message: 'Check for updates',
+                  message: context.l10n.checkForUpdates,
                   child: StockholmToolbarButton(
                     icon: CupertinoIcons.cloud_download,
                     onPressed: _checkForUpdates,
@@ -44,14 +45,14 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
                 ),
                 const Spacer(),
                 Tooltip(
-                  message: 'Refresh feed',
+                  message: context.l10n.refreshFeed,
                   child: StockholmToolbarButton(
                     icon: CupertinoIcons.refresh,
                     onPressed: () => _refresh(ref),
                   ),
                 ),
                 Tooltip(
-                  message: 'Add new feed',
+                  message: context.l10n.addNewFeed,
                   child: StockholmToolbarButton(
                     icon: CupertinoIcons.add,
                     onPressed: () => _showAddFeedDialog(context),
@@ -65,7 +66,7 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
               leading: const Icon(CupertinoIcons.today),
               selected: _selectedIndex == 0,
               child: SidebarListTileTextWidget(
-                text: 'Unread',
+                text: context.l10n.unread,
                 count: state.feedItemUnreadCount,
               ),
               onPressed: () {
@@ -81,7 +82,7 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
                 _setSelectedIndex(1);
               },
               child: SidebarListTileTextWidget(
-                text: 'Starred',
+                text: context.l10n.starred,
                 count: state.feedItemStarredCount,
               ),
             ),
@@ -93,7 +94,7 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
                 _setSelectedIndex(2);
               },
               child: SidebarListTileTextWidget(
-                text: 'All',
+                text: context.l10n.all,
                 count: state.feedItemCount,
               ),
             ),

@@ -6,6 +6,7 @@ import 'package:flutter_html/flutter_html.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rssify/core/database/database.dart';
 import 'package:rssify/core/database/schema/preferences.dart';
+import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/services/preferences_service.dart';
 import 'package:rssify/core/sizes.dart';
 import 'package:rssify/core/util/datetime_formats.dart';
@@ -58,7 +59,7 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
   @override
   Widget build(BuildContext context) {
     if (widget.feedItem == null) {
-      return const Center(child: Text('Check your RSS Feeds!'));
+      return Center(child: Text(context.l10n.emptyRSSFeedItem));
     }
     return Column(
       children: [
@@ -76,7 +77,7 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Sizes.p4),
               child: Tooltip(
-                message: 'Switch font-family',
+                message: context.l10n.switchFontFamilyTooltip,
                 child: StockholmDropdownButton(
                   onChanged: (value) {
                     setState(() {
@@ -144,7 +145,7 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: Sizes.p4),
               child: Tooltip(
-                message: 'Switch font-size',
+                message: context.l10n.switchFontSizeTooltip,
                 child: StockholmDropdownButton(
                   onChanged: (value) {
                     setState(() {
@@ -180,14 +181,14 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
               ),
             ),
             Tooltip(
-              message: 'Share',
+              message: context.l10n.shareTooltip,
               child: StockholmToolbarButton(
                 icon: CupertinoIcons.share,
                 onPressed: () => shareUrl(widget.feedItem!.link),
               ),
             ),
             Tooltip(
-              message: 'Star this article',
+              message: context.l10n.starTooltip,
               child: StockholmToolbarButton(
                 icon: _markedAsRead
                     ? CupertinoIcons.star_fill
@@ -197,14 +198,14 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
               ),
             ),
             Tooltip(
-              message: 'Summarize article (Coming soon)',
+              message: context.l10n.summarizeTooltip,
               child: StockholmToolbarButton(
                 icon: CupertinoIcons.text_bubble,
                 onPressed: () {},
               ),
             ),
             Tooltip(
-              message: 'Go to website',
+              message: context.l10n.openInBrowserTooltip,
               child: StockholmToolbarButton(
                 icon: CupertinoIcons.link,
                 onPressed: () => goToWebsite(widget.feedItem!.link),

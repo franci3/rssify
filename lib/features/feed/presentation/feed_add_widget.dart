@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/sizes.dart';
 import 'package:rssify/core/widgets/layout/error_text.dart';
 import 'package:rssify/features/feed/presentation/controller/feed_notifier.dart';
@@ -27,37 +28,37 @@ class _FeedAddWidgetState extends ConsumerState<FeedAddWidget> {
   @override
   Widget build(BuildContext context) {
     return StockholmDialog(
-      title: const Text('Add Feed'),
+      title: Text(context.l10n.addFeedDialogTitle),
       contents: Padding(
         padding: const EdgeInsets.all(Sizes.p16),
         child: Column(
           spacing: Sizes.p8,
           children: [
             StockholmTextField(
-              placeholder: 'Link',
+              placeholder: context.l10n.link,
               controller: _urlController,
               maxLength: 100,
               keyboardType: TextInputType.text,
             ),
             StockholmTextField(
-              placeholder: 'Name',
+              placeholder: context.l10n.name,
               controller: _nameController,
               maxLength: 50,
               keyboardType: TextInputType.url,
             ),
-            if (_hasError) const ErrorText(text: 'URL and Name required.'),
+            if (_hasError) ErrorText(text: context.l10n.addFeedRequired),
             Row(
               spacing: Sizes.p8,
               mainAxisAlignment: .end,
               children: [
                 StockholmFlatButton(
                   onPressed: () => Navigator.pop(context),
-                  child: const Text('Cancel'),
+                  child: Text(context.l10n.cancel),
                 ),
                 StockholmFlatButton(
                   important: true,
                   onPressed: _validateInput,
-                  child: const Text('Add'),
+                  child: Text(context.l10n.add),
                 ),
               ],
             ),

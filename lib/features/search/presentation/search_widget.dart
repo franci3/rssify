@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/sizes.dart';
 import 'package:rssify/features/feed_item_list/presentation/controller/feed_item_list_notifier.dart';
 import 'package:stockholm/stockholm.dart';
@@ -20,7 +21,7 @@ class SearchWidget extends ConsumerWidget {
               .read(feedItemListNotifierProvider.notifier)
               .searchAllFeedItems(value);
         },
-        placeholder: 'Search',
+        placeholder: context.l10n.search,
       ),
     );
   }

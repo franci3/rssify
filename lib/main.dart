@@ -7,6 +7,7 @@ import 'package:rssify/core/theme.dart';
 import 'package:rssify/features/feed_item_list/presentation/feed_item_list_widget.dart';
 import 'package:rssify/features/feed_item_list/presentation/feed_item_widget.dart';
 import 'package:rssify/features/sidebar/presentation/sidebar_widget.dart';
+import 'package:rssify/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -36,6 +37,8 @@ class Rssify extends StatelessWidget {
       title: Constants.appName,
       theme: GlobalTheme.globalAppTheme,
       home: const RssifyHome(),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
   }
 }

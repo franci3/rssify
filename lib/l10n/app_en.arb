@@ -1,0 +1,34 @@
+{
+  "all": "All",
+  "starred": "Starred",
+  "unread": "Unread",
+  "checkForUpdates": "Check for updates",
+  "refreshFeed": "Refresh feed",
+  "addNewFeed": "Add new feed",
+  "search": "Search",
+  "emptyRSSFeedItem": "Add an RSS Feed or click on an Item",
+  "switchFontFamilyTooltip": "Switch font-family",
+  "switchFontSizeTooltip": "Switch font-size",
+  "shareTooltip": "Share",
+  "starTooltip": "Star this article",
+  "summarizeTooltip": "Summarize article (Coming soon)",
+  "openInBrowserTooltip": "Go to website",
+  "deleteFeedDialogTitle": "Delete feed",
+  "delete": "Delete",
+  "deleteFeedDialogContent": "Are you sure you want to delete {feedName}?",
+  "@deleteFeedDialogContent": {
+    "description": "Question before deleting a feed",
+    "placeholders": {
+      "feedName": {
+        "type": "String",
+        "example": "ArsTechnica"
+      }
+    }
+  },
+  "add": "Add",
+  "addFeedDialogTitle": "Add feed",
+  "link": "Link",
+  "name": "Name",
+  "cancel": "Cancel",
+  "addFeedRequired": "URL and Name required."
+}

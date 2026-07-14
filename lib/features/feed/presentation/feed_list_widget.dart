@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rssify/core/database/database.dart';
+import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/widgets/async_value/async_value_state_widget.dart';
 import 'package:rssify/features/feed/presentation/controller/feed_notifier.dart';
 import 'package:stockholm/stockholm.dart';
@@ -43,9 +44,9 @@ class FeedListWidget extends ConsumerWidget {
       context: context,
       builder: (context) {
         return StockholmAlertDialog(
-          title: const Text('Delete Feed'),
-          buttonTitle: const Text('Delete'),
-          contents: Text('Are you sure you want to delete ${feed.name}?'),
+          title: Text(context.l10n.deleteFeedDialogTitle),
+          buttonTitle: Text(context.l10n.delete),
+          contents: Text(context.l10n.deleteFeedDialogContent(feed.name)),
           onClosed: () async {
             await ref
                 .read(feedNotifierProvider.notifier)
