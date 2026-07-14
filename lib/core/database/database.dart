@@ -1,5 +1,6 @@
 import 'package:drift/drift.dart';
 import 'package:drift_flutter/drift_flutter.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:rssify/core/constants.dart';
@@ -22,13 +23,23 @@ class AppDatabase extends _$AppDatabase {
   @override
   int get schemaVersion => 1;
 
-  static QueryExecutor _openConnection() {
-    /*if (kDebugMode) {
-      return NativeDatabase.memory();
-    }*/
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+    onCreate: (m) async {
+      await m.createAll();
+    },
+    onUpgrade: (m, from, to) async {},
+    beforeOpen: (details) async {
+      await customStatement('PRAGMA foreign_keys = ON');
+    },
+  );
 
+  static QueryExecutor _openConnection() {
+    final name = kDebugMode
+        ? '${Constants.databaseName}_debug'
+        : Constants.databaseName;
     return driftDatabase(
-      name: Constants.databaseName,
+      name: name,
       native: const DriftNativeOptions(
         databaseDirectory: getApplicationSupportDirectory,
       ),
