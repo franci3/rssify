@@ -29,6 +29,21 @@ if [ -z "$VERSION" ]; then
   error "Could not find version in pubspec.yaml"
 fi
 
+# Parse options
+APPLE_ID="${APPLE_ID:-}"
+TEAM_ID="${TEAM_ID:-}"
+APPLE_PASSWORD="${APPLE_PASSWORD:-}"
+
+while [[ "$#" -gt 0 ]]; do
+  case $1 in
+    --apple-id) APPLE_ID="$2"; shift ;;
+    --team-id) TEAM_ID="$2"; shift ;;
+    --password) APPLE_PASSWORD="$2"; shift ;;
+    *) error "Unknown parameter passed: $1\nUsage: $0 [--apple-id <apple-id>] [--team-id <team-id>] [--password <app-specific-password>]" ;;
+  esac
+  shift
+done
+
 TAG="v$VERSION"
 ZIP_NAME="rssify-macOS.zip"
 
@@ -44,6 +59,29 @@ flutter pub get
 info "Building macOS application..."
 flutter build macos --release
 
+# 2b. Notarize app if credentials are provided
+if [ -n "$APPLE_ID" ] && [ -n "$TEAM_ID" ] && [ -n "$APPLE_PASSWORD" ]; then
+  info "Notarizing application..."
+  cd build/macos/Build/Products/Release
+  
+  # Create a temporary zip for notarytool
+  ditto -c -k --keepParent rssify.app "notarize_temp.zip"
+  
+  xcrun notarytool submit "notarize_temp.zip" \
+    --apple-id "$APPLE_ID" \
+    --team-id "$TEAM_ID" \
+    --password "$APPLE_PASSWORD" \
+    --wait
+  
+  rm "notarize_temp.zip"
+  
+  info "Stapling notarization ticket to app..."
+  xcrun stapler staple rssify.app
+  cd - > /dev/null
+else
+  info "Apple credentials not fully provided. Skipping notarization."
+fi
+
 # 3. Package the app
 info "Packaging application..."
 if [ -f "$ZIP_NAME" ]; then
@@ -51,10 +89,6 @@ if [ -f "$ZIP_NAME" ]; then
 fi
 
 cd build/macos/Build/Products/Release
-# Note: Stapling only works if you have already notarized the app (via xcrun notarytool).
-# If you run this script without a prior notarization step, stapling will fail.
-# Uncomment the line below once you integrate your notarytool submission.
-# xcrun stapler staple rssify.app
 
 ditto -c -k --keepParent rssify.app "../../../../../$ZIP_NAME"
 cd - > /dev/null
