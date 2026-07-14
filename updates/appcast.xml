@@ -1,0 +1,14 @@
+<?xml version="1.0" standalone="yes"?>
+<rss xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle" version="2.0">
+    <channel>
+        <title>rssify</title>
+        <item>
+            <title>1.0.1</title>
+            <pubDate>Tue, 14 Jul 2026 23:07:04 +0200</pubDate>
+            <sparkle:version>4</sparkle:version>
+            <sparkle:shortVersionString>1.0.1</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>10.15</sparkle:minimumSystemVersion>
+            <enclosure url="https://raw.githubusercontent.com/franci3/rssify/main/updates/rssify-macOS.zip" length="23202641" type="application/octet-stream" sparkle:edSignature="MH//b3qop7s9Jw15NuQji2dae6ljes8uvcQXkFI1EC4UG2sy7WKMoNZlC8UIuOUsTTkCrdz8RSAGdKVAJYgIAw=="/>
+        </item>
+    </channel>
+</rss>
