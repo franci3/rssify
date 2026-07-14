@@ -45,3 +45,4 @@ app.*.map.json
 /android/app/release
 /sparkle/
 /rssify-macOS.zip
+/scripts/commands.txt
