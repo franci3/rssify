@@ -8,9 +8,13 @@ import 'package:rssify/core/database/database.dart';
 import 'package:rssify/core/database/schema/preferences.dart';
 import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/services/preferences_service.dart';
+import 'package:rssify/core/services/summary_service.dart';
 import 'package:rssify/core/sizes.dart';
 import 'package:rssify/core/util/datetime_formats.dart';
 import 'package:rssify/core/util/external_launcher.dart';
+import 'package:rssify/core/widgets/dialogs/error_dialog.dart';
+import 'package:rssify/core/widgets/dialogs/progress_dialog.dart';
+import 'package:rssify/core/widgets/dialogs/summary_dialog.dart';
 import 'package:rssify/features/feed_item_list/presentation/controller/feed_item_list_notifier.dart';
 import 'package:rssify/features/feed_item_list/presentation/controller/feed_preferences_notifier.dart';
 import 'package:stockholm/stockholm.dart';
@@ -201,7 +205,7 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
               message: context.l10n.summarizeTooltip,
               child: StockholmToolbarButton(
                 icon: CupertinoIcons.text_bubble,
-                onPressed: () {},
+                onPressed: () => _summarizeArticle(),
               ),
             ),
             Tooltip(
@@ -290,6 +294,23 @@ class _FeedItemWidgetState extends ConsumerState<FeedItemWidget> {
         _fontFamily = preferences.fontFamily.value;
         _fontFamilyIndex = preferences.fontFamily.index;
       });
+    }
+  }
+
+  Future<void> _summarizeArticle() async {
+    try {
+      final summary = await showProgressDialog<String?>(context, () async {
+        return await ref
+            .read(summaryServiceProvider)
+            .summarize(widget.feedItem!.description);
+      });
+      if (mounted && summary != null) {
+        await showSummaryDialog(context, summary, _textSizes, _fontFamily);
+      }
+    } catch (e) {
+      if (mounted) {
+        await showErrorDialog(context, context.l10n.summarizeException);
+      }
     }
   }
 

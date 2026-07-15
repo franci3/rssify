@@ -18,6 +18,7 @@ A minimalistic, modern RSS Reader built specifically for macOS using Flutter.
 - **Local Persistence**: Powered by **Drift (SQL)** for offline access, fast querying, and caching of feed items.
 - **Modern State Management**: Built using **Riverpod** for robust, testable state management.
 - **Detailed Logging**: Built-in logging configured to trace application behavior and fetch errors.
+- **Summarization**: Utilizes the offline FoundationalModel on macOS, keeping all processing local.
 
 ---
 

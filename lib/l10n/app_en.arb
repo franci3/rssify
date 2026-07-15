@@ -11,7 +11,7 @@
   "switchFontSizeTooltip": "Switch font-size",
   "shareTooltip": "Share",
   "starTooltip": "Star this article",
-  "summarizeTooltip": "Summarize article (Coming soon)",
+  "summarizeTooltip": "Summarize article",
   "openInBrowserTooltip": "Go to website",
   "deleteFeedDialogTitle": "Delete feed",
   "delete": "Delete",
@@ -28,11 +28,14 @@
   "add": "Add",
   "addFeedDialogTitle": "Add feed",
   "link": "Link",
+  "link": "Link",
   "name": "Name",
   "cancel": "Cancel",
   "addFeedRequired": "URL and Name required.",
   "markAllAsReadTooltip": "Mark all as read",
   "errorDialogTitle": "Something went wrong",
   "dismiss": "Dismiss",
-  "addFeedExceptionContent": "Could not add feed, check your inputs!"
+  "addFeedExceptionContent": "Could not add feed, check your inputs!",
+  "summaryTitle": "Summary (AI generated)",
+  "summarizeException": "There was an issue summarizing this article"
 }

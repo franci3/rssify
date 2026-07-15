@@ -1,9 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:stockholm/stockholm.dart';
 
-Future<void> showProgressDialog(
+Future<T?> showProgressDialog<T>(
   BuildContext context,
-  Future<void> Function() process,
+  Future<T> Function() process,
 ) async {
   showStockholmProgressDialog(
     context: context,
@@ -11,6 +11,7 @@ Future<void> showProgressDialog(
       return const StockholmActivityIndicator();
     },
   );
-  await process();
+  final result = await process();
   if (context.mounted) Navigator.of(context).pop();
+  return result;
 }

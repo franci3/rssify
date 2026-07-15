@@ -10,7 +10,7 @@ class DeepLinkService {
 
   DeepLinkService({required this.onFeedUrlReceived}) {
     _platform.setMethodCallHandler((call) async {
-      if (call.method == 'onDeepLink') {
+      if (call.method == Constants.onDeepLinkMethodsChannelMethod) {
         final String? url = call.arguments as String?;
         if (url != null) {
           _processIncomingUrl(url);
@@ -22,7 +22,7 @@ class DeepLinkService {
   Future<void> checkForInitialUrl() async {
     try {
       final String? initialUrl = await _platform.invokeMethod<String>(
-        'getInitialUrl',
+        Constants.getInitialUrlMethodsChannelMethod,
       );
       if (initialUrl != null) {
         _processIncomingUrl(initialUrl);

@@ -45,7 +45,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get starTooltip => 'Star this article';
 
   @override
-  String get summarizeTooltip => 'Summarize article (Coming soon)';
+  String get summarizeTooltip => 'Summarize article';
 
   @override
   String get openInBrowserTooltip => 'Go to website';
@@ -91,4 +91,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get addFeedExceptionContent =>
       'Could not add feed, check your inputs!';
+
+  @override
+  String get summaryTitle => 'Summary (AI generated)';
+
+  @override
+  String get summarizeException =>
+      'There was an issue summarizing this article';
 }

@@ -169,7 +169,7 @@ abstract class AppLocalizations {
   /// No description provided for @summarizeTooltip.
   ///
   /// In en, this message translates to:
-  /// **'Summarize article (Coming soon)'**
+  /// **'Summarize article'**
   String get summarizeTooltip;
 
   /// No description provided for @openInBrowserTooltip.
@@ -255,6 +255,18 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Could not add feed, check your inputs!'**
   String get addFeedExceptionContent;
+
+  /// No description provided for @summaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Summary (AI generated)'**
+  String get summaryTitle;
+
+  /// No description provided for @summarizeException.
+  ///
+  /// In en, this message translates to:
+  /// **'There was an issue summarizing this article'**
+  String get summarizeException;
 }
 
 class _AppLocalizationsDelegate
