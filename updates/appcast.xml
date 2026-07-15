@@ -3,6 +3,14 @@
     <channel>
         <title>rssify</title>
         <item>
+            <title>1.0.2</title>
+            <pubDate>Wed, 15 Jul 2026 16:19:39 +0200</pubDate>
+            <sparkle:version>10</sparkle:version>
+            <sparkle:shortVersionString>1.0.2</sparkle:shortVersionString>
+            <sparkle:minimumSystemVersion>26.0</sparkle:minimumSystemVersion>
+            <enclosure url="https://github.com/franci3/rssify/releases/download/v1.0.2+10/rssify-macOS.zip" length="23783641" type="application/octet-stream" sparkle:edSignature="qJH114VH5AbNt/OIE5fsqaRnMCIKS6XDy/eNCo4XI3DN7Y/1lSHueLnefbuL2YB9LdUcOZIb5GfhvrQSJpEmAg=="/>
+        </item>
+        <item>
             <title>1.0.1</title>
             <pubDate>Wed, 15 Jul 2026 14:29:11 +0200</pubDate>
             <sparkle:version>9</sparkle:version>
