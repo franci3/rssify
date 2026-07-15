@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rssify/core/extensions.dart';
+import 'package:rssify/core/services/deeplink_service.dart';
 import 'package:rssify/core/services/refresh_service.dart';
 import 'package:rssify/core/services/updater_service.dart';
 import 'package:rssify/core/sizes.dart';
@@ -22,6 +23,20 @@ class SidebarWidget extends ConsumerStatefulWidget {
 class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
   int? _selectedIndex;
   int? _selectedFeed;
+
+  @override
+  void initState() {
+    super.initState();
+    final linkService = DeepLinkService(
+      onFeedUrlReceived: (feedUrl) async {
+        await _showAddFeedDialog(context, feedUrl);
+      },
+    );
+
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      linkService.checkForInitialUrl();
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -129,12 +144,15 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
     });
   }
 
-  Future<void> _showAddFeedDialog(BuildContext context) async {
+  Future<void> _showAddFeedDialog(
+    BuildContext context, [
+    String? initialUrl,
+  ]) async {
     final feedAdded = await showAdaptiveDialog<bool?>(
       context: context,
       barrierDismissible: true,
       builder: (context) {
-        return const FeedAddWidget();
+        return FeedAddWidget(initialUrl: initialUrl);
       },
     );
     if (feedAdded ?? false) {

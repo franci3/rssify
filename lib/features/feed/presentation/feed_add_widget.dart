@@ -7,7 +7,8 @@ import 'package:rssify/features/feed/presentation/controller/feed_notifier.dart'
 import 'package:stockholm/stockholm.dart';
 
 class FeedAddWidget extends ConsumerStatefulWidget {
-  const FeedAddWidget({super.key});
+  const FeedAddWidget({super.key, this.initialUrl});
+  final String? initialUrl;
 
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _FeedAddWidgetState();
@@ -15,8 +16,14 @@ class FeedAddWidget extends ConsumerStatefulWidget {
 
 class _FeedAddWidgetState extends ConsumerState<FeedAddWidget> {
   final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _urlController = TextEditingController();
+  late final TextEditingController _urlController;
   bool _hasError = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _urlController = TextEditingController(text: widget.initialUrl);
+  }
 
   @override
   void dispose() {

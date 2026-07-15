@@ -35,7 +35,7 @@ class AppDatabase extends _$AppDatabase {
   );
 
   static QueryExecutor _openConnection() {
-    final name = kDebugMode
+    const name = kDebugMode
         ? '${Constants.databaseName}_debug'
         : Constants.databaseName;
     return driftDatabase(
