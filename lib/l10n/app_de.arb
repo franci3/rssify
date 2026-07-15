@@ -1,0 +1,40 @@
+{
+  "all": "Alle",
+  "starred": "Markiert",
+  "unread": "Ungelesen",
+  "checkForUpdates": "Nach Updates suchen",
+  "refreshFeed": "Feed aktualisieren",
+  "addNewFeed": "Neuen Feed hinzufügen",
+  "search": "Suchen",
+  "emptyRSSFeedItem": "Füge einen RSS-Feed hinzu oder klicke auf ein Element",
+  "switchFontFamilyTooltip": "Schriftfamilie wechseln",
+  "switchFontSizeTooltip": "Schriftgröße wechseln",
+  "shareTooltip": "Teilen",
+  "starTooltip": "Artikel markieren",
+  "summarizeTooltip": "Artikel zusammenfassen",
+  "openInBrowserTooltip": "Zur Website gehen",
+  "deleteFeedDialogTitle": "Feed löschen",
+  "delete": "Löschen",
+  "deleteFeedDialogContent": "Bist du sicher, dass du {feedName} löschen möchtest?",
+  "@deleteFeedDialogContent": {
+    "description": "Frage bevor ein Feed gelöscht wird",
+    "placeholders": {
+      "feedName": {
+        "type": "String",
+        "example": "ArsTechnica"
+      }
+    }
+  },
+  "add": "Hinzufügen",
+  "addFeedDialogTitle": "Feed hinzufügen",
+  "link": "Link",
+  "name": "Name",
+  "cancel": "Abbrechen",
+  "addFeedRequired": "URL und Name erforderlich.",
+  "markAllAsReadTooltip": "Alle als gelesen markieren",
+  "errorDialogTitle": "Etwas ist schiefgelaufen",
+  "dismiss": "Schließen",
+  "addFeedExceptionContent": "Feed konnte nicht hinzugefügt werden, überprüfe deine Eingaben!",
+  "summaryTitle": "Zusammenfassung (KI-generiert)",
+  "summarizeException": "Es gab ein Problem beim Zusammenfassen dieses Artikels"
+}
