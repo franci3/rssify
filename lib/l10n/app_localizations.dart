@@ -237,6 +237,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Mark all as read'**
   String get markAllAsReadTooltip;
+
+  /// No description provided for @errorDialogTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get errorDialogTitle;
+
+  /// No description provided for @dismiss.
+  ///
+  /// In en, this message translates to:
+  /// **'Dismiss'**
+  String get dismiss;
+
+  /// No description provided for @addFeedExceptionContent.
+  ///
+  /// In en, this message translates to:
+  /// **'Could not add feed, check your inputs!'**
+  String get addFeedExceptionContent;
 }
 
 class _AppLocalizationsDelegate

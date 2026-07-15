@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:rssify/core/extensions.dart';
 import 'package:rssify/core/sizes.dart';
+import 'package:rssify/core/widgets/dialogs/error_dialog.dart';
 import 'package:rssify/core/widgets/layout/error_text.dart';
 import 'package:rssify/features/feed/presentation/controller/feed_notifier.dart';
 import 'package:stockholm/stockholm.dart';
@@ -75,17 +76,22 @@ class _FeedAddWidgetState extends ConsumerState<FeedAddWidget> {
     );
   }
 
-  void _validateInput() {
+  Future<void> _validateInput() async {
     if (_nameController.text.isEmpty || _urlController.text.isEmpty) {
       setState(() {
         _hasError = true;
       });
     } else {
-      ref
-          .read(feedNotifierProvider.notifier)
-          .addFeed(name: _nameController.text, url: _urlController.text);
-
-      Navigator.pop(context, true);
+      try {
+        await ref
+            .read(feedNotifierProvider.notifier)
+            .addFeed(name: _nameController.text, url: _urlController.text);
+        if (mounted) Navigator.pop(context, true);
+      } catch (e) {
+        if (mounted) {
+          await showErrorDialog(context, context.l10n.addFeedExceptionContent);
+        }
+      }
     }
   }
 }

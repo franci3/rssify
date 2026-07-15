@@ -6,6 +6,7 @@ import 'package:rssify/core/services/deeplink_service.dart';
 import 'package:rssify/core/services/refresh_service.dart';
 import 'package:rssify/core/services/updater_service.dart';
 import 'package:rssify/core/sizes.dart';
+import 'package:rssify/core/widgets/dialogs/progress_dialog.dart';
 import 'package:rssify/features/feed/presentation/feed_add_widget.dart';
 import 'package:rssify/features/feed/presentation/feed_list_widget.dart';
 import 'package:rssify/features/feed_item_list/presentation/controller/feed_item_list_notifier.dart';
@@ -135,10 +136,12 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
   }
 
   Future<void> _refresh(WidgetRef ref) async {
-    await ref.read(refreshServiceProvider).refresh();
-    await ref
-        .read(feedItemListNotifierProvider.notifier)
-        .getAllUnreadFeedItems();
+    await showProgressDialog(context, () async {
+      await ref.read(refreshServiceProvider).refresh();
+      await ref
+          .read(feedItemListNotifierProvider.notifier)
+          .getAllUnreadFeedItems();
+    });
     setState(() {
       _selectedIndex = 0;
     });

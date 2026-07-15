@@ -31,5 +31,8 @@
   "name": "Name",
   "cancel": "Cancel",
   "addFeedRequired": "URL and Name required.",
-  "markAllAsReadTooltip": "Mark all as read"
+  "markAllAsReadTooltip": "Mark all as read",
+  "errorDialogTitle": "Something went wrong",
+  "dismiss": "Dismiss",
+  "addFeedExceptionContent": "Could not add feed, check your inputs!"
 }

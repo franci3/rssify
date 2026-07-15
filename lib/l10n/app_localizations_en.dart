@@ -81,4 +81,14 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get markAllAsReadTooltip => 'Mark all as read';
+
+  @override
+  String get errorDialogTitle => 'Something went wrong';
+
+  @override
+  String get dismiss => 'Dismiss';
+
+  @override
+  String get addFeedExceptionContent =>
+      'Could not add feed, check your inputs!';
 }
