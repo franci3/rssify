@@ -25,6 +25,7 @@ class _FeedItemListWidgetState extends ConsumerState<FeedItemListWidget> {
   @override
   Widget build(BuildContext context) {
     return StockholmSideBar(
+      padding: const EdgeInsetsGeometry.only(top: Sizes.p4),
       footer: const SearchWidget(),
       children: [
         Builder(
