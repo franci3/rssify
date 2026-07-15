@@ -86,4 +86,9 @@ class FeedItemsDao extends DatabaseAccessor<AppDatabase>
       readsFrom: {feedItems},
     ).map((row) => row.read<int>('c')).watchSingle();
   }
+
+  Future<int> markAllAsRead() async {
+    return await (update(feedItems)..where((t) => t.wasRead.equals(false)))
+        .write(const FeedItemsCompanion(wasRead: Value(true)));
+  }
 }

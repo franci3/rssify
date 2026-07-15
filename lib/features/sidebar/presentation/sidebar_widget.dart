@@ -62,17 +62,23 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
             ),
           ),
           children: [
-            StockholmListTile(
-              leading: const Icon(CupertinoIcons.today),
-              selected: _selectedIndex == 0,
-              child: SidebarListTileTextWidget(
-                text: context.l10n.unread,
-                count: state.feedItemUnreadCount,
-              ),
-              onPressed: () {
-                _getAllFeedsUnread(ref);
-                _setSelectedIndex(0);
+            GestureDetector(
+              behavior: HitTestBehavior.deferToChild,
+              onSecondaryTapUp: (details) {
+                _showUnreadTooltip(details.globalPosition);
               },
+              child: StockholmListTile(
+                leading: const Icon(CupertinoIcons.today),
+                selected: _selectedIndex == 0,
+                child: SidebarListTileTextWidget(
+                  text: context.l10n.unread,
+                  count: state.feedItemUnreadCount,
+                ),
+                onPressed: () {
+                  _getAllFeedsUnread(ref);
+                  _setSelectedIndex(0);
+                },
+              ),
             ),
             StockholmListTile(
               leading: const Icon(CupertinoIcons.star),
@@ -153,6 +159,25 @@ class _SidebarWidgetState extends ConsumerState<SidebarWidget> {
       _selectedIndex = index;
       _selectedFeed = null;
     });
+  }
+
+  Future<void> _showUnreadTooltip(Offset globalPosition) async {
+    await showStockholmMenu(
+      context: context,
+      preferredAnchorPoint: globalPosition,
+      menu: StockholmMenu(
+        items: [
+          StockholmMenuItem(
+            child: Text(context.l10n.markAllAsReadTooltip),
+            onSelected: () async {
+              await ref
+                  .read(feedItemListNotifierProvider.notifier)
+                  .markAllFeedItemsAsRead();
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   Future<void> _checkForUpdates() async {

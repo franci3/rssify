@@ -30,5 +30,6 @@
   "link": "Link",
   "name": "Name",
   "cancel": "Cancel",
-  "addFeedRequired": "URL and Name required."
+  "addFeedRequired": "URL and Name required.",
+  "markAllAsReadTooltip": "Mark all as read"
 }

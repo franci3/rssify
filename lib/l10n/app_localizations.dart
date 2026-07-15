@@ -231,6 +231,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'URL and Name required.'**
   String get addFeedRequired;
+
+  /// No description provided for @markAllAsReadTooltip.
+  ///
+  /// In en, this message translates to:
+  /// **'Mark all as read'**
+  String get markAllAsReadTooltip;
 }
 
 class _AppLocalizationsDelegate

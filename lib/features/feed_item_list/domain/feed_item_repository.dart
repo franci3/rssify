@@ -16,4 +16,5 @@ abstract class FeedItemRepository {
   });
 
   Future<void> deleteFeedItemsByFeedId({required int feedId});
+  Future<void> markAllUnreadAsRead();
 }

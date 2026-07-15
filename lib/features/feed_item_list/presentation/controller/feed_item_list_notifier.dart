@@ -39,6 +39,11 @@ class FeedItemListNotifier extends AsyncNotifier<List<FeedItem>> {
     state = AsyncValue.data(items);
   }
 
+  Future<void> markAllFeedItemsAsRead() async {
+    await _feedItemRepository.markAllUnreadAsRead();
+    _logger.info('Marked FeedItems as read');
+  }
+
   Future<void> searchAllFeedItems(String query) async {
     final items = await _feedItemRepository.getFeedItems(filterQuery: query);
     state = AsyncValue.data(items);

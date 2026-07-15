@@ -78,4 +78,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get addFeedRequired => 'URL and Name required.';
+
+  @override
+  String get markAllAsReadTooltip => 'Mark all as read';
 }

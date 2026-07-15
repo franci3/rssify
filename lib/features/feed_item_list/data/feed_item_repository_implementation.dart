@@ -44,6 +44,11 @@ class FeedItemRepositoryImplementation implements FeedItemRepository {
   Future<int> deleteFeedItemsByFeedId({required int feedId}) async {
     return await _database.feedItemsDao.deleteFeedItemsByFeedId(feedId: feedId);
   }
+
+  @override
+  Future<int> markAllUnreadAsRead() async {
+    return await _database.feedItemsDao.markAllAsRead();
+  }
 }
 
 final feedItemRepositoryProvider = Provider<FeedItemRepository>(
