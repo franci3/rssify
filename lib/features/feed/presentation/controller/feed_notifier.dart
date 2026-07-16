@@ -20,8 +20,8 @@ class FeedNotifier extends StreamNotifier<List<Feed>> {
   }
 
   Future<void> deleteFeed({required int feedId}) async {
+    await _deleteFeedItems(feedId: feedId);
     await _feedRepository.deleteFeed(feedId: feedId);
-    unawaited(_deleteFeedItems(feedId: feedId));
     state.requireValue.removeWhere((feed) => feed.id == feedId);
   }
 
